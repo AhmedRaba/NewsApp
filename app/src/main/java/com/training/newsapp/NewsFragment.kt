@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.training.newsapp.databinding.FragmentNewsBinding
 import com.training.newsapp.viewmodel.NewsViewModel
 
@@ -26,7 +27,9 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
-        viewModel.fetchArticles()
+        fetchArticles()
+        setupRetryButton()
+
     }
 
     private fun setupRecyclerView() {
@@ -34,6 +37,33 @@ class NewsFragment : Fragment() {
             val adapter = NewsAdapter(it.articles)
             binding.rvNews.adapter = adapter
         }
+        viewModel.error.observe(viewLifecycleOwner) {
+            showError(it)
+        }
+    }
+
+
+    private fun setupRetryButton() {
+        binding.btnRetry.setOnClickListener {
+            fetchArticles()
+        }
+    }
+
+    private fun fetchArticles() {
+        if (isInternetAvailable(requireContext())) {
+            binding.rvNews.visibility = View.VISIBLE
+            binding.btnRetry.visibility = View.GONE
+            viewModel.fetchArticles(requireContext())
+        } else {
+            binding.btnRetry.visibility = View.VISIBLE
+            binding.rvNews.visibility = View.GONE
+            showError("No internet connection")
+        }
+    }
+
+
+    private fun showError(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
 
