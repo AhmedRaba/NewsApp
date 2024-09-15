@@ -9,12 +9,14 @@ import androidx.lifecycle.viewModelScope
 import com.training.newsapp.model.articles.ArticlesResponse
 import com.training.newsapp.model.sources.SourcesResponse
 import com.training.newsapp.repos.NewsRepository
+import com.training.newsapp.repos.NewsRepositoryImpl
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class NewsViewModel : ViewModel() {
 
-    private val repository = NewsRepository()
+    private val repository: NewsRepository = NewsRepositoryImpl()
+
 
     private val _articles = MutableLiveData<ArticlesResponse>()
     val articles: LiveData<ArticlesResponse> get() = _articles
@@ -29,8 +31,7 @@ class NewsViewModel : ViewModel() {
     fun fetchSources() {
         viewModelScope.launch {
             try {
-                val response: Response<SourcesResponse> = repository.getSources()
-
+                val response = repository.getSources()
                 if (response.isSuccessful) {
                     _sources.postValue(response.body())
                 } else {
@@ -42,7 +43,7 @@ class NewsViewModel : ViewModel() {
         }
     }
 
-    fun fetchProducts() {
+    fun fetchArticles() {
         viewModelScope.launch {
             try {
                 val response: Response<ArticlesResponse> = repository.getArticles()

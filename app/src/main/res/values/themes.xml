@@ -1,22 +1,28 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.NewsApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="android:statusBarColor">@color/green</item>
+
     </style>
 
     <style name="Theme.NewsApp" parent="Base.Theme.NewsApp" />
-
 
 
     <style name="HeaderTextView">
         <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">22sp</item>
     </style>
+
     <style name="AppBarTextView">
         <item name="android:fontFamily">@font/exo_medium</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="NewsTitleTextView">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>

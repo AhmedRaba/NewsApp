@@ -79,31 +79,28 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_sports"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/iv_sports" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_health"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/iv_health" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_environment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
@@ -119,31 +116,28 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_politics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/iv_politics" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_business"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
                 android:src="@drawable/iv_business" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/btn_science"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"

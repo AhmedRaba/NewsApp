@@ -21,11 +21,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        viewModel.sources.observe(this) {
-            Log.e("onCreate", "onCreate: ${it.articles.first().title}")
-        }
-
-        viewModel.fetchSources()
 
     }
 }
