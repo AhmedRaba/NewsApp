@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.training.newsapp.isInternetAvailable
 import com.training.newsapp.model.articles.ArticlesResponse
 import com.training.newsapp.model.sources.SourcesResponse
 import com.training.newsapp.repos.NewsRepository
@@ -34,34 +33,50 @@ class NewsViewModel : ViewModel() {
     fun fetchSources() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = repository.getSources()
+                val response: Response<SourcesResponse> = repository.getSources()
+                Log.e(TAG, "Sources response: ${response.body()}")
+
                 if (response.isSuccessful) {
                     _sources.postValue(response.body())
                 } else {
+                    Log.e(TAG, "fetchSourcesVM: ${response.message()}")
                     _error.postValue(response.message())
                 }
             } catch (e: Exception) {
-                Log.e(TAG, e.toString())
+                _error.postValue(e.message)
             }
         }
     }
 
-    fun fetchArticles(context: Context) {
-        if (isInternetAvailable(context)) {
-            viewModelScope.launch(Dispatchers.IO) {
-                try {
-                    val response: Response<ArticlesResponse> = repository.getArticles()
-                    if (response.isSuccessful) {
-                        _articles.postValue(response.body())
-                    } else {
-                        _error.postValue(response.message())
-                    }
-                } catch (e: Exception) {
-                    _error.postValue(e.message)
+    fun fetchArticles() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response: Response<ArticlesResponse> = repository.getArticles()
+                if (response.isSuccessful) {
+                    _articles.postValue(response.body())
+                } else {
+                    Log.e(TAG, "fetchArticles VM: ${response.message()}")
+                    _error.postValue(response.message())
                 }
+            } catch (e: Exception) {
+                _error.postValue(e.message)
             }
-        } else {
-            _error.postValue("Check Internet Connection")
+        }
+    }
+
+    fun fetchArticlesBySource(source: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response: Response<ArticlesResponse> = repository.getArticlesBySource(source)
+                if (response.isSuccessful) {
+                    _articles.postValue(response.body())
+                } else {
+                    Log.e(TAG, "fetchArticlesBySource VM: ${response.message()}")
+                    _error.postValue(response.message())
+                }
+            } catch (e: Exception) {
+                _error.postValue(e.message)
+            }
         }
     }
 }

@@ -65,6 +65,12 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs_news"
+        app:tabMode="scrollable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_news"

@@ -19,4 +19,8 @@ class NewsRepositoryImpl : NewsRepository {
         return apiService.getArticles()
     }
 
+    override suspend fun getArticlesBySource(source:String): Response<ArticlesResponse> {
+        return apiService.getArticlesBySource(sources = source)
+    }
+
 }

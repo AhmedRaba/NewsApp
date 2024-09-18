@@ -1,13 +1,19 @@
 package com.training.newsapp
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.training.newsapp.databinding.FragmentNewsBinding
+import com.training.newsapp.model.articles.ArticlesResponse
+import com.training.newsapp.model.sources.Source
 import com.training.newsapp.viewmodel.NewsViewModel
 
 class NewsFragment : Fragment() {
@@ -26,45 +32,114 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         setupRecyclerView()
-        fetchArticles()
+        observeViewModel()
         setupRetryButton()
+
+
+
+        fetchSources()
 
     }
 
     private fun setupRecyclerView() {
-        viewModel.articles.observe(viewLifecycleOwner) {
-            val adapter = NewsAdapter(it.articles)
-            binding.rvNews.adapter = adapter
+        binding.rvNews.adapter = NewsAdapter(emptyList())
+    }
+
+
+    private fun observeViewModel() {
+        viewModel.articles.observe(viewLifecycleOwner) { response ->
+            Log.e(TAG, "Articles observer triggered")
+            if (response == null || response.articles.isEmpty()) {
+                toggleRetryButton(true)
+            } else {
+                updateNewsList(response)
+                toggleRetryButton(false)
+            }
         }
+
+        viewModel.sources.observe(viewLifecycleOwner) { response ->
+            Log.e(TAG, "Sources observer triggered")
+            showTabs(response.sources)
+        }
+
         viewModel.error.observe(viewLifecycleOwner) {
+            Log.e(TAG, "Error observer triggered: $it")
             showError(it)
+            toggleRetryButton(true)
         }
     }
 
 
     private fun setupRetryButton() {
         binding.btnRetry.setOnClickListener {
-            fetchArticles()
+            val selectedTab = binding.tabsNews.getTabAt(binding.tabsNews.selectedTabPosition)
+            val source = selectedTab?.tag as? String
+            if (source != null) {
+                fetchArticlesBySource(source)
+            }
+            fetchSources()
+            toggleRetryButton(false)
         }
     }
 
-    private fun fetchArticles() {
-        if (isInternetAvailable(requireContext())) {
-            binding.rvNews.visibility = View.VISIBLE
-            binding.btnRetry.visibility = View.GONE
-            viewModel.fetchArticles(requireContext())
-        } else {
+    private fun fetchSources() {
+        viewModel.fetchSources()
+    }
+
+    private fun toggleRetryButton(show: Boolean) {
+        if (show) {
             binding.btnRetry.visibility = View.VISIBLE
             binding.rvNews.visibility = View.GONE
-            showError("No internet connection")
+        } else {
+            binding.btnRetry.visibility = View.GONE
+            binding.rvNews.visibility = View.VISIBLE
         }
     }
 
+
+    private fun updateNewsList(response: ArticlesResponse) {
+        val adapter = NewsAdapter(response.articles)
+        binding.rvNews.adapter = adapter
+    }
+
+    private fun fetchArticlesBySource(source: String) {
+        viewModel.fetchArticlesBySource(source)
+    }
+
+
+    private fun showTabs(sources: List<Source>) {
+        sources.forEach {
+            val tab = binding.tabsNews.newTab().setText(it.name)
+            tab.tag = it.id
+            binding.tabsNews.addTab(tab)
+        }
+        val firstTab = binding.tabsNews.getTabAt(0)
+        fetchArticlesBySource(firstTab?.tag.toString())
+
+
+        binding.tabsNews.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.tag?.let {
+                    fetchArticlesBySource(it.toString())
+                }
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                tab?.tag?.let { fetchArticlesBySource(it.toString()) }
+            }
+        })
+
+    }
 
     private fun showError(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
-
 
 }

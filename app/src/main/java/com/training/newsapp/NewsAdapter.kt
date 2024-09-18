@@ -28,7 +28,7 @@ class NewsAdapter(val articles: List<Article>) :
         val article = articles[position]
         holder.binding.apply {
             tvTitleItem.text = article.title
-            tvAuthorItem.text = article.author
+            tvAuthorItem.text = article.source.name
 
             Glide.with(holder.itemView).load(article.urlToImage).centerCrop().into(ivImageItem)
 
