@@ -1,7 +1,6 @@
 package com.training.newsapp.viewmodel
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,8 +28,12 @@ class NewsViewModel : ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
 
     fun fetchSources() {
+        _isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<SourcesResponse> = repository.getSources()
@@ -44,11 +47,14 @@ class NewsViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _error.postValue(e.message)
+            } finally {
+                _isLoading.postValue(false)
             }
         }
     }
 
     fun fetchArticles() {
+        _isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<ArticlesResponse> = repository.getArticles()
@@ -60,11 +66,14 @@ class NewsViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _error.postValue(e.message)
+            } finally {
+                _isLoading.postValue(false)
             }
         }
     }
 
     fun fetchArticlesBySource(source: String) {
+        _isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<ArticlesResponse> = repository.getArticlesBySource(source)
@@ -76,6 +85,8 @@ class NewsViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 _error.postValue(e.message)
+            } finally {
+                _isLoading.postValue(false)
             }
         }
     }

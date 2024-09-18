@@ -1,11 +1,10 @@
 package com.training.newsapp
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +25,7 @@ class NewsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentNewsBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
+
         return binding.root
     }
 
@@ -36,6 +35,7 @@ class NewsFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
+
         setupRetryButton()
 
 
@@ -48,10 +48,12 @@ class NewsFragment : Fragment() {
         binding.rvNews.adapter = NewsAdapter(emptyList())
     }
 
-
     private fun observeViewModel() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
         viewModel.articles.observe(viewLifecycleOwner) { response ->
-            Log.e(TAG, "Articles observer triggered")
             if (response == null || response.articles.isEmpty()) {
                 toggleRetryButton(true)
             } else {
@@ -61,15 +63,24 @@ class NewsFragment : Fragment() {
         }
 
         viewModel.sources.observe(viewLifecycleOwner) { response ->
-            Log.e(TAG, "Sources observer triggered")
             showTabs(response.sources)
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            Log.e(TAG, "Error observer triggered: $it")
             showError(it)
             toggleRetryButton(true)
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        if (isLoading) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.rvNews.visibility = View.GONE
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.rvNews.visibility = View.VISIBLE
+        }
+
     }
 
 
@@ -83,10 +94,6 @@ class NewsFragment : Fragment() {
             fetchSources()
             toggleRetryButton(false)
         }
-    }
-
-    private fun fetchSources() {
-        viewModel.fetchSources()
     }
 
     private fun toggleRetryButton(show: Boolean) {
@@ -105,6 +112,11 @@ class NewsFragment : Fragment() {
         binding.rvNews.adapter = adapter
     }
 
+
+    private fun fetchSources() {
+        viewModel.fetchSources()
+    }
+
     private fun fetchArticlesBySource(source: String) {
         viewModel.fetchArticlesBySource(source)
     }
@@ -116,6 +128,14 @@ class NewsFragment : Fragment() {
             tab.tag = it.id
             binding.tabsNews.addTab(tab)
         }
+
+        for (i in 0 until binding.tabsNews.tabCount) {
+            val tabView = (binding.tabsNews.getChildAt(0) as ViewGroup).getChildAt(i)
+            val layoutParams = tabView.layoutParams as ViewGroup.MarginLayoutParams
+            layoutParams.setMargins(16, 0, 0, 16)
+            tabView.layoutParams = layoutParams
+        }
+
         val firstTab = binding.tabsNews.getTabAt(0)
         fetchArticlesBySource(firstTab?.tag.toString())
 
