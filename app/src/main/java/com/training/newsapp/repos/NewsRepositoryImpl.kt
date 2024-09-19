@@ -10,8 +10,8 @@ class NewsRepositoryImpl : NewsRepository {
     private val apiService = RetrofitClient.apiService
 
 
-    override suspend fun getSources(): Response<SourcesResponse> {
-        return apiService.getSources()
+    override suspend fun getSources(category:String): Response<SourcesResponse> {
+        return apiService.getSources(category= category)
     }
 
 
@@ -19,7 +19,7 @@ class NewsRepositoryImpl : NewsRepository {
         return apiService.getArticles()
     }
 
-    override suspend fun getArticlesBySource(source:String): Response<ArticlesResponse> {
+    override suspend fun getArticlesBySource(source: String): Response<ArticlesResponse> {
         return apiService.getArticlesBySource(sources = source)
     }
 

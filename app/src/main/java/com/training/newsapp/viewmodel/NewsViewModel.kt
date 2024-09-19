@@ -32,11 +32,11 @@ class NewsViewModel : ViewModel() {
     val isLoading: LiveData<Boolean> get() = _isLoading
 
 
-    fun fetchSources() {
+    fun fetchSources(category: String) {
         _isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response: Response<SourcesResponse> = repository.getSources()
+                val response: Response<SourcesResponse> = repository.getSources(category)
                 Log.e(TAG, "Sources response: ${response.body()}")
 
                 if (response.isSuccessful) {

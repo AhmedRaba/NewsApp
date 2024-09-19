@@ -6,7 +6,7 @@ import retrofit2.Response
 
 interface NewsRepository {
 
-    suspend fun getSources(): Response<SourcesResponse>
+    suspend fun getSources(category:String): Response<SourcesResponse>
 
     suspend fun getArticles(): Response<ArticlesResponse>
 

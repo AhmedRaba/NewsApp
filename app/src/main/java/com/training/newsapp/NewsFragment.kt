@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -19,6 +20,8 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding
     private val viewModel: NewsViewModel by viewModels()
+    private val args: NewsFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +38,8 @@ class NewsFragment : Fragment() {
 
         setupRecyclerView()
         observeViewModel()
-
         setupRetryButton()
-
+        setupDrawer()
 
 
         fetchSources()
@@ -76,6 +78,7 @@ class NewsFragment : Fragment() {
         if (isLoading) {
             binding.progressBar.visibility = View.VISIBLE
             binding.rvNews.visibility = View.GONE
+            binding.btnRetry.visibility = View.GONE
         } else {
             binding.progressBar.visibility = View.GONE
             binding.rvNews.visibility = View.VISIBLE
@@ -114,7 +117,7 @@ class NewsFragment : Fragment() {
 
 
     private fun fetchSources() {
-        viewModel.fetchSources()
+        viewModel.fetchSources(args.category)
     }
 
     private fun fetchArticlesBySource(source: String) {
@@ -155,6 +158,26 @@ class NewsFragment : Fragment() {
                 tab?.tag?.let { fetchArticlesBySource(it.toString()) }
             }
         })
+
+    }
+
+    private fun setupDrawer() {
+        binding.ivDrawer.setOnClickListener {
+            binding.drawerLayout.openDrawer(binding.navView)
+        }
+
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_categories -> {
+                    findNavController().navigate(R.id.action_newsFragment_to_categoriesFragment)
+                }
+            }
+
+            binding.drawerLayout.closeDrawer(binding.navView)
+
+            true
+        }
+
 
     }
 

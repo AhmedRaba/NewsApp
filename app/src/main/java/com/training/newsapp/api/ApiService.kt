@@ -12,7 +12,9 @@ interface ApiService {
 
     @GET("v2/top-headlines/sources")
     suspend fun getSources(
-        @Query("apiKey") apiKey: String = RetrofitClient.API_KEY
+        @Query("apiKey") apiKey: String = RetrofitClient.API_KEY,
+        @Query("category") category: String,
+
     ): Response<SourcesResponse>
 
     @GET("v2/everything")
@@ -20,7 +22,7 @@ interface ApiService {
         @Query("apikey") apiKey: String=RetrofitClient.API_KEY,
     ): Response<ArticlesResponse>
 
-    @GET("v2/everything")
+    @GET("v2/top-headlines")
     suspend fun getArticlesBySource(
         @Query("apikey") apiKey: String=RetrofitClient.API_KEY,
         @Query("sources") sources: String
