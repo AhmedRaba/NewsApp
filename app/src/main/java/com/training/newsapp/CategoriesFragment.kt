@@ -43,7 +43,7 @@ class CategoriesFragment : Fragment() {
             navigateToNewsFrag("science")
         }
         binding.btnPolitics.setOnClickListener {
-            navigateToNewsFrag("politics")
+            navigateToNewsFrag("general")
         }
         binding.btnEnvironment.setOnClickListener {
             navigateToNewsFrag("environment")

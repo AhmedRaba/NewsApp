@@ -10,6 +10,6 @@ interface NewsRepository {
 
     suspend fun getArticles(): Response<ArticlesResponse>
 
-    suspend fun getArticlesBySource(source: String): Response<ArticlesResponse>
+    suspend fun getArticlesBySource(source: String,query: String): Response<ArticlesResponse>
 
 }

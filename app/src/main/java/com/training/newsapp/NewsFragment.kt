@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -40,7 +41,7 @@ class NewsFragment : Fragment() {
         observeViewModel()
         setupRetryButton()
         setupDrawer()
-
+        setupSearch()
 
         fetchSources()
 
@@ -58,6 +59,7 @@ class NewsFragment : Fragment() {
         viewModel.articles.observe(viewLifecycleOwner) { response ->
             if (response == null || response.articles.isEmpty()) {
                 toggleRetryButton(true)
+                updateNewsList(response)
             } else {
                 updateNewsList(response)
                 toggleRetryButton(false)
@@ -92,7 +94,7 @@ class NewsFragment : Fragment() {
             val selectedTab = binding.tabsNews.getTabAt(binding.tabsNews.selectedTabPosition)
             val source = selectedTab?.tag as? String
             if (source != null) {
-                fetchArticlesBySource(source)
+                fetchArticlesBySource(source, "")
             }
             fetchSources()
             toggleRetryButton(false)
@@ -120,8 +122,8 @@ class NewsFragment : Fragment() {
         viewModel.fetchSources(args.category)
     }
 
-    private fun fetchArticlesBySource(source: String) {
-        viewModel.fetchArticlesBySource(source)
+    private fun fetchArticlesBySource(source: String, query: String = "") {
+        viewModel.fetchArticlesBySource(source = source, query)
     }
 
 
@@ -161,6 +163,35 @@ class NewsFragment : Fragment() {
 
     }
 
+
+    private fun setupSearch() {
+        binding.ivSearch.setOnClickListener {
+            binding.searchLayout.visibility = View.VISIBLE
+        }
+
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchLayout.visibility = View.GONE
+                if (query != null) {
+                    val selectedTab =
+                        binding.tabsNews.getTabAt(binding.tabsNews.selectedTabPosition)
+                    val source = selectedTab?.tag as? String
+
+                        fetchArticlesBySource("", query)
+
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
+
+
+    }
+
+
     private fun setupDrawer() {
         binding.ivDrawer.setOnClickListener {
             binding.drawerLayout.openDrawer(binding.navView)
@@ -177,8 +208,6 @@ class NewsFragment : Fragment() {
 
             true
         }
-
-
     }
 
     private fun showError(message: String) {

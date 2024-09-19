@@ -72,11 +72,12 @@ class NewsViewModel : ViewModel() {
         }
     }
 
-    fun fetchArticlesBySource(source: String) {
+    fun fetchArticlesBySource(source: String, query: String) {
         _isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response: Response<ArticlesResponse> = repository.getArticlesBySource(source)
+                val response: Response<ArticlesResponse> =
+                    repository.getArticlesBySource(source, query=query)
                 if (response.isSuccessful) {
                     _articles.postValue(response.body())
                 } else {
