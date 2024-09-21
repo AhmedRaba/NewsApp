@@ -25,6 +25,7 @@ class CategoriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCategories()
+        setupDrawer()
     }
 
 
@@ -40,13 +41,36 @@ class CategoriesFragment : Fragment() {
             navigateToNewsFrag("health")
         }
         binding.btnScience.setOnClickListener {
-            navigateToNewsFrag("science")
+            navigateToNewsFrag("technology")
         }
         binding.btnPolitics.setOnClickListener {
             navigateToNewsFrag("general")
         }
         binding.btnEnvironment.setOnClickListener {
             navigateToNewsFrag("environment")
+        }
+
+
+    }
+
+    private fun setupDrawer() {
+        binding.ivDrawerCategories.setOnClickListener {
+            binding.drawerLayoutCategories.openDrawer(binding.navViewCategories)
+        }
+
+        val menu = binding.navViewCategories.menu
+        menu.removeItem(R.id.menu_categories)
+
+        binding.navViewCategories.setNavigationItemSelectedListener { menuItem ->
+
+            when (menuItem.itemId) {
+                R.id.menu_settings -> {
+                    findNavController().navigate(R.id.action_categoriesFragment_to_settingsFragment)
+                }
+            }
+            binding.drawerLayoutCategories.closeDrawer(binding.navViewCategories)
+
+            true
         }
 
 

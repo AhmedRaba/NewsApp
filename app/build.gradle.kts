@@ -55,6 +55,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    //dataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("androidx.datastore:datastore:1.1.1")
+
 
     //retrofit
     implementation (libs.retrofit)
@@ -66,6 +70,7 @@ dependencies {
 
     //glide
     implementation (libs.glide)
+
 
 
 

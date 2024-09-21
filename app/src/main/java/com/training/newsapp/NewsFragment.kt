@@ -1,6 +1,7 @@
 package com.training.newsapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.training.newsapp.databinding.FragmentNewsBinding
 import com.training.newsapp.model.articles.ArticlesResponse
 import com.training.newsapp.model.sources.Source
 import com.training.newsapp.viewmodel.NewsViewModel
+import org.intellij.lang.annotations.Language
 
 class NewsFragment : Fragment() {
 
@@ -128,6 +130,7 @@ class NewsFragment : Fragment() {
 
 
     private fun showTabs(sources: List<Source>) {
+
         sources.forEach {
             val tab = binding.tabsNews.newTab().setText(it.name)
             tab.tag = it.id
@@ -173,11 +176,8 @@ class NewsFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchLayout.visibility = View.GONE
                 if (query != null) {
-                    val selectedTab =
-                        binding.tabsNews.getTabAt(binding.tabsNews.selectedTabPosition)
-                    val source = selectedTab?.tag as? String
 
-                        fetchArticlesBySource("", query)
+                    fetchArticlesBySource("", query)
 
                 }
                 return true
@@ -194,17 +194,20 @@ class NewsFragment : Fragment() {
 
     private fun setupDrawer() {
         binding.ivDrawer.setOnClickListener {
-            binding.drawerLayout.openDrawer(binding.navView)
+            binding.drawerLayout.openDrawer(binding.navViewNews)
         }
 
-        binding.navView.setNavigationItemSelectedListener { menuItem ->
+        binding.navViewNews.setNavigationItemSelectedListener { menuItem ->
+
             when (menuItem.itemId) {
                 R.id.menu_categories -> {
                     findNavController().navigate(R.id.action_newsFragment_to_categoriesFragment)
+                } R.id.menu_settings -> {
+                    findNavController().navigate(R.id.action_newsFragment_to_settingsFragment)
                 }
             }
 
-            binding.drawerLayout.closeDrawer(binding.navView)
+            binding.drawerLayout.closeDrawer(binding.navViewNews)
 
             true
         }

@@ -16,6 +16,9 @@
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoriesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
@@ -33,10 +36,18 @@
         <argument
             android:name="category"
             app:argType="string" />
+        <action
+            android:id="@+id/action_newsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsDetailsFragment"
         android:name="com.training.newsapp.NewsDetailsFragment"
         android:label="fragment_news_details"
         tools:layout="@layout/fragment_news_details" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.training.newsapp.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

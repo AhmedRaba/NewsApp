@@ -1,150 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CategoriesFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/appbar_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/appbar_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iv_drawer_categories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_drawer"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/AppBarTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_header"
+            style="@style/HeaderTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/pick_your_category_of_interest"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintWidth_percent="0.75" />
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layoutDirection="ltr"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:padding="16dp">
+                android:layoutDirection="ltr"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/ic_drawer"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layoutDirection="ltr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    style="@style/AppBarTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/btn_sports"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layoutDirection="ltr"
+                        android:padding="10dp"
+                        android:src="@drawable/iv_sports"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_header"
-        style="@style/HeaderTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/pick_your_category_of_interest"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintWidth_percent="0.75" />
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CategoryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/sports"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_sports"
+                        app:layout_constraintEnd_toEndOf="@id/btn_sports"
+                        app:layout_constraintStart_toStartOf="@id/btn_sports" />
 
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_header">
+                    <ImageView
+                        android:id="@+id/btn_health"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layoutDirection="ltr"
+                        android:padding="10dp"
+                        android:src="@drawable/iv_health"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_sports" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CategoryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/health"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_health"
+                        app:layout_constraintEnd_toEndOf="@id/btn_health"
+                        app:layout_constraintStart_toStartOf="@id/btn_health" />
 
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/btn_environment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layoutDirection="ltr"
+                        android:padding="10dp"
+                        android:src="@drawable/iv_environment"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_health" />
 
-            <ImageView
-                android:id="@+id/btn_sports"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/iv_sports" />
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CategoryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/environment"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_environment"
+                        app:layout_constraintEnd_toEndOf="@id/btn_environment"
+                        app:layout_constraintStart_toStartOf="@id/btn_environment" />
 
-            <ImageView
-                android:id="@+id/btn_health"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/iv_health" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/btn_environment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/iv_environment" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layoutDirection="ltr"
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layoutDirection="ltr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btn_politics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layoutDirection="ltr"
+                        android:padding="10dp"
+                        android:src="@drawable/iv_politics"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CategoryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/politics"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_politics"
+                        app:layout_constraintEnd_toEndOf="@id/btn_politics"
+                        app:layout_constraintStart_toStartOf="@id/btn_politics" />
+
+                    <ImageView
+                        android:id="@+id/btn_business"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layoutDirection="ltr"
+                        android:padding="10dp"
+                        android:src="@drawable/iv_business"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_politics" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CategoryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/business"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_business"
+                        app:layout_constraintEnd_toEndOf="@id/btn_business"
+                        app:layout_constraintStart_toStartOf="@id/btn_business" />
+
+
+                    <ImageView
+                        android:id="@+id/btn_science"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layoutDirection="ltr"
+                        android:padding="10dp"
+                        android:src="@drawable/iv_science"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/btn_business" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/CategoryTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:text="@string/technology"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_science"
+                        app:layout_constraintEnd_toEndOf="@id/btn_science"
+                        app:layout_constraintStart_toStartOf="@id/btn_science" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_menu" />
 
-            <ImageView
-                android:id="@+id/btn_politics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/iv_politics" />
 
-            <ImageView
-                android:id="@+id/btn_business"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/iv_business" />
-
-            <ImageView
-                android:id="@+id/btn_science"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="10dp"
-                android:src="@drawable/iv_science" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

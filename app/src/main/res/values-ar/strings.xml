@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">برنامج الأخبار</string>
+    <string name="sports">رياضة</string>
+    <string name="pick_your_category_of_interest">أختر ما تريده</string>
+    <string name="politics">سياسة</string>
+    <string name="business">أقتصاد</string>
+    <string name="technology">تكنولوجيا</string>
+    <string name="settings">الإعدادات</string>
+    <string name="health">الصحة</string>
+    <string name="environment">البيئة</string>
+    <string name="language">اللغة</string>
+</resources>
