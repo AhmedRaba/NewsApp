@@ -10,8 +10,7 @@ Welcome to **NewsApp**! This Android application allows you to stay updated with
 - **Retrofit Integration**: Fetch news data from multiple sources seamlessly.
 - **Search Functionality**: Easily search for news articles by category or source.
 - **Language Support**: Change the app's language to suit your preferences. 🌍
-- **Dependency Injection with Dagger Hilt**: Simplifies the management of dependencies and enhances code maintainability.
-
+- 
 ## Tech Stack ⚙️
 
 - **Kotlin**: For building the Android application.
@@ -19,5 +18,6 @@ Welcome to **NewsApp**! This Android application allows you to stay updated with
 - **Retrofit**: For network operations and API calls.
 - **MVVM**: For architecture design.
 - **Dagger Hilt**: For dependency injection.
+- **Coroutines**: For handling asynchronous tasks.
 
 Feel free to explore the code and contribute to the project! 🚀
