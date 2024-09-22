@@ -9,30 +9,38 @@
         android:id="@+id/categoriesFragment"
         android:name="com.training.newsapp.ui.frags.CategoriesFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_categories" >
+        tools:layout="@layout/fragment_categories">
+
+        <!-- Navigates to NewsFragment, passing category -->
         <action
             android:id="@+id/action_categoriesFragment_to_newsFragment"
             app:destination="@id/newsFragment" />
+
         <argument
             android:name="category"
             app:argType="string" />
+
         <action
             android:id="@+id/action_categoriesFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.training.newsapp.ui.frags.NewsFragment"
         android:label="fragment_news"
-        tools:layout="@layout/fragment_news" >
+        tools:layout="@layout/fragment_news">
+
         <action
             android:id="@+id/action_newsFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment"
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
+
         <action
             android:id="@+id/action_newsFragment_to_newsDetailsFragment"
             app:destination="@id/newsDetailsFragment" />
+
         <argument
             android:name="category"
             app:argType="string" />
@@ -40,11 +48,18 @@
             android:id="@+id/action_newsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/newsDetailsFragment"
         android:name="com.training.newsapp.ui.frags.NewsDetailsFragment"
         android:label="fragment_news_details"
-        tools:layout="@layout/fragment_news_details" />
+        tools:layout="@layout/fragment_news_details">
+
+        <action
+            android:id="@+id/action_newsDetailsFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.training.newsapp.ui.frags.SettingsFragment"

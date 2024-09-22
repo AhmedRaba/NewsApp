@@ -8,7 +8,7 @@ import com.training.newsapp.R
 import com.training.newsapp.data.api.model.Article
 import com.training.newsapp.databinding.ItemNewsBinding
 
-class NewsAdapter(val articles: List<Article>) :
+class NewsAdapter(private val articles: List<Article>) :
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 

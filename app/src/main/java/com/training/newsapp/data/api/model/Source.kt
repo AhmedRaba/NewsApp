@@ -1,13 +1,16 @@
 package com.training.newsapp.data.api.model
 
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 
 @Entity(tableName = "sources")
+@Parcelize
 data class Source(
     @ColumnInfo
     @SerializedName("category")
@@ -35,5 +38,5 @@ data class Source(
 
     @ColumnInfo
     @SerializedName("url")
-    val url: String
-)
+    val url: String,
+) : Parcelable

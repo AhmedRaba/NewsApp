@@ -13,8 +13,8 @@ class NewsRemoteDataSource @Inject constructor(private val apiService: ApiServic
         return apiService.getSources(category = category)
     }
 
-    suspend fun getArticles(source: String): Response<ArticlesResponse> {
-        return apiService.getArticlesBySource(sources = source)
+    suspend fun getArticles(source: String, query: String): Response<ArticlesResponse> {
+        return apiService.getArticlesBySource(sources = source, query = query)
     }
 
 

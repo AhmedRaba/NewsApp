@@ -13,11 +13,11 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.training.newsapp.ui.adapter.NewsAdapter
 import com.training.newsapp.R
 import com.training.newsapp.data.api.model.ArticlesResponse
 import com.training.newsapp.data.api.model.Source
 import com.training.newsapp.databinding.FragmentNewsBinding
+import com.training.newsapp.ui.adapter.NewsAdapter
 import com.training.newsapp.ui.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -131,7 +131,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun fetchArticlesBySource(source: String, query: String = "") {
-        viewModel.fetchArticlesBySource(source = source, query)
+        viewModel.fetchArticlesBySource(source = source, query = query)
     }
 
 
@@ -183,8 +183,8 @@ class NewsFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchLayout.visibility = View.GONE
                 if (query != null) {
-                    fetchArticlesBySource("", query)
-                    Log.e("onQueryTextSubmit", "onQueryTextSubmit: $query", )
+                    fetchArticlesBySource("", query = query)
+                    Log.e("onQueryTextSubmit", "onQueryTextSubmit: $query")
                 }
                 return true
             }

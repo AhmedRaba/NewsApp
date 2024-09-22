@@ -63,6 +63,7 @@ class NewsViewModel @Inject constructor(private val repository: NewsRepository) 
                     repository.getArticlesBySource(source, query = query)
                 if (response.isSuccessful) {
                     _articles.postValue(response.body())
+                    Log.e(TAG, "fetchArticlesBySource VM: ${response.message()}")
                 } else {
                     Log.e(TAG, "fetchArticlesBySource VM: ${response.message()}")
                     _error.postValue(response.message())

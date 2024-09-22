@@ -3,9 +3,9 @@ package com.training.newsapp.data.repos
 import android.content.Context
 import com.training.newsapp.data.api.model.ArticlesResponse
 import com.training.newsapp.data.api.model.SourcesResponse
-import com.training.newsapp.isInternetAvailable
 import com.training.newsapp.data.repos.news_repo.data_sources.local_data_source.NewsLocalDataSource
 import com.training.newsapp.data.repos.news_repo.data_sources.remote_data_source.NewsRemoteDataSource
+import com.training.newsapp.isInternetAvailable
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -35,6 +35,6 @@ class NewsRepositoryImpl @Inject constructor(
         source: String,
         query: String,
     ): Response<ArticlesResponse> {
-        return remoteDataSource.getArticles(source)
+        return remoteDataSource.getArticles(source, query)
     }
 }

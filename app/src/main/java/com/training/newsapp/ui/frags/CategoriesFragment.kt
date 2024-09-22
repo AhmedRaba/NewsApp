@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.training.newsapp.R
+import com.training.newsapp.data.api.model.Article
 import com.training.newsapp.databinding.FragmentCategoriesBinding
 import com.training.newsapp.ui.frags.CategoriesFragmentDirections
 
@@ -79,6 +80,7 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun navigateToNewsFrag(category: String) {
+
         val action =
             CategoriesFragmentDirections.actionCategoriesFragmentToNewsFragment(
                 category
