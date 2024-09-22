@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout_categories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CategoriesFragment">
+    tools:context=".ui.frags.CategoriesFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,8 +71,8 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layoutDirection="ltr"
             android:layout_height="0dp"
+            android:layoutDirection="ltr"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,15 +83,15 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layoutDirection="ltr"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:layoutDirection="ltr"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layoutDirection="ltr"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layoutDirection="ltr">
 
                     <ImageView
                         android:id="@+id/btn_sports"
@@ -102,6 +102,7 @@
                         android:layoutDirection="ltr"
                         android:padding="10dp"
                         android:src="@drawable/iv_sports"
+                        app:layout_constraintBottom_toTopOf="@id/btn_health"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,6 +126,7 @@
                         android:layoutDirection="ltr"
                         android:padding="10dp"
                         android:src="@drawable/iv_health"
+                        app:layout_constraintBottom_toTopOf="@id/btn_environment"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btn_sports" />
 
@@ -148,6 +150,7 @@
                         android:layoutDirection="ltr"
                         android:padding="10dp"
                         android:src="@drawable/iv_environment"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btn_health" />
 
@@ -168,14 +171,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layoutDirection="ltr"
                 android:gravity="center"
+                android:layoutDirection="ltr"
                 android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layoutDirection="ltr"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layoutDirection="ltr">
 
                     <ImageView
                         android:id="@+id/btn_politics"
@@ -186,6 +189,7 @@
                         android:layoutDirection="ltr"
                         android:padding="10dp"
                         android:src="@drawable/iv_politics"
+                        app:layout_constraintBottom_toTopOf="@id/btn_business"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -208,6 +212,7 @@
                         android:layoutDirection="ltr"
                         android:padding="10dp"
                         android:src="@drawable/iv_business"
+                        app:layout_constraintBottom_toTopOf="@id/btn_technology"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/btn_politics" />
 
@@ -223,7 +228,7 @@
 
 
                     <ImageView
-                        android:id="@+id/btn_science"
+                        android:id="@+id/btn_technology"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="true"
@@ -231,6 +236,7 @@
                         android:layoutDirection="ltr"
                         android:padding="10dp"
                         android:src="@drawable/iv_science"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/btn_business" />
 
@@ -240,9 +246,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
                         android:text="@string/technology"
-                        app:layout_constraintBottom_toBottomOf="@id/btn_science"
-                        app:layout_constraintEnd_toEndOf="@id/btn_science"
-                        app:layout_constraintStart_toStartOf="@id/btn_science" />
+                        app:layout_constraintBottom_toBottomOf="@id/btn_technology"
+                        app:layout_constraintEnd_toEndOf="@id/btn_technology"
+                        app:layout_constraintStart_toStartOf="@id/btn_technology" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
-package com.training.newsapp.api
+package com.training.newsapp.data.api
 
-import com.training.newsapp.model.articles.ArticlesResponse
-import com.training.newsapp.model.sources.SourcesResponse
+import com.training.newsapp.data.api.model.ArticlesResponse
+import com.training.newsapp.data.api.model.SourcesResponse
 import com.training.newsapp.utils.RetrofitClient
 import retrofit2.Response
 import retrofit2.http.GET
@@ -16,10 +16,6 @@ interface ApiService {
         @Query("category") category: String,
     ): Response<SourcesResponse>
 
-    @GET("v2/everything")
-    suspend fun getArticles(
-        @Query("apikey") apiKey: String=RetrofitClient.API_KEY,
-    ): Response<ArticlesResponse>
 
     @GET("v2/top-headlines")
     suspend fun getArticlesBySource(

@@ -1,4 +1,4 @@
-package com.training.newsapp.viewmodel
+package com.training.newsapp.ui.viewmodel
 
 import android.content.ContentValues.TAG
 import android.util.Log
@@ -6,17 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.training.newsapp.model.articles.ArticlesResponse
-import com.training.newsapp.model.sources.SourcesResponse
-import com.training.newsapp.repos.NewsRepository
-import com.training.newsapp.repos.NewsRepositoryImpl
+import com.training.newsapp.data.api.model.ArticlesResponse
+import com.training.newsapp.data.api.model.SourcesResponse
+import com.training.newsapp.data.repos.NewsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class NewsViewModel : ViewModel() {
 
-    private val repository: NewsRepository = NewsRepositoryImpl()
+@HiltViewModel
+class NewsViewModel @Inject constructor(private val repository: NewsRepository) : ViewModel() {
 
 
     private val _articles = MutableLiveData<ArticlesResponse>()
@@ -53,31 +54,13 @@ class NewsViewModel : ViewModel() {
         }
     }
 
-    fun fetchArticles() {
-        _isLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val response: Response<ArticlesResponse> = repository.getArticles()
-                if (response.isSuccessful) {
-                    _articles.postValue(response.body())
-                } else {
-                    Log.e(TAG, "fetchArticles VM: ${response.message()}")
-                    _error.postValue(response.message())
-                }
-            } catch (e: Exception) {
-                _error.postValue(e.message)
-            } finally {
-                _isLoading.postValue(false)
-            }
-        }
-    }
 
     fun fetchArticlesBySource(source: String, query: String) {
         _isLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response: Response<ArticlesResponse> =
-                    repository.getArticlesBySource(source, query=query)
+                    repository.getArticlesBySource(source, query = query)
                 if (response.isSuccessful) {
                     _articles.postValue(response.body())
                 } else {

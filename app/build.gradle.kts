@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -56,13 +59,25 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     //dataStore
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
-    implementation("androidx.datastore:datastore:1.1.1")
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore)
 
 
     //retrofit
     implementation (libs.retrofit)
     implementation (libs.retrofit2.converter.gson)
+
+
+    //roomDB
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+
+    //daggerHilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
 
 
     //splash

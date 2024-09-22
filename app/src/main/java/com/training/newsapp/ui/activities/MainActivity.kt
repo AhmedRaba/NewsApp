@@ -1,4 +1,4 @@
-package com.training.newsapp
+package com.training.newsapp.ui.activities
 
 import android.content.Context
 import android.content.res.Configuration
@@ -9,24 +9,26 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.training.newsapp.data.LanguagePreferences
 import com.training.newsapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var languagePreferences: LanguagePreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Install splash screen early
         installSplashScreen()
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize language preferences
         languagePreferences = LanguagePreferences(this)
 
-        // Apply the language before the layout is inflated
         lifecycleScope.launch {
             languagePreferences.selectedLanguage.collect { languageCode ->
                 languageCode?.let {
@@ -35,25 +37,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        super.onCreate(savedInstanceState)
-
-        // Inflate layout after setting locale
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        // Initialize LanguagePreferences with runBlocking to access the selected language synchronously
+
         val languageCode = runBlocking {
             val prefs = LanguagePreferences(newBase!!)
-            prefs.selectedLanguage.firstOrNull() ?: "en" // Fallback to English if no language is set
+            prefs.selectedLanguage.firstOrNull() ?: "en"
         }
 
-        // Set the locale with the retrieved language code
+
+        val config = newBase?.resources?.configuration ?: Configuration()
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
-
-        val config = Configuration()
         config.setLocale(locale)
 
         val context = newBase?.createConfigurationContext(config)
@@ -66,9 +62,8 @@ class MainActivity : AppCompatActivity() {
 
         val config = resources.configuration
         config.setLocale(locale)
-        resources.updateConfiguration(config, resources.displayMetrics)
 
-        // Set layout direction if needed
+
         val layoutDirection = if (languageCode == "ar") {
             View.LAYOUT_DIRECTION_RTL
         } else {

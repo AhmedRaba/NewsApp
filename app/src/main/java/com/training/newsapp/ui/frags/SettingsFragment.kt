@@ -1,5 +1,6 @@
-package com.training.newsapp
+package com.training.newsapp.ui.frags
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.training.newsapp.R
 import com.training.newsapp.data.LanguagePreferences
 import com.training.newsapp.databinding.FragmentSettingsBinding
 import kotlinx.coroutines.launch
@@ -55,7 +57,7 @@ class SettingsFragment : Fragment() {
 
             when (menuItem.itemId) {
                 R.id.menu_categories -> {
-                   findNavController().popBackStack()
+                    findNavController().popBackStack()
                 }
             }
             binding.drawerLayoutSettings.closeDrawer(binding.navViewSettings)
@@ -124,11 +126,12 @@ class SettingsFragment : Fragment() {
         val config = resources.configuration
         config.setLocale(locale)
 
-        resources.updateConfiguration(config, resources.displayMetrics)
+        requireActivity().createConfigurationContext(config)
 
         val intent = requireActivity().intent
         requireActivity().finish()
-        startActivity(intent)
+
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 
 
     }

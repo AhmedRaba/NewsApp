@@ -1,6 +1,6 @@
 package com.training.newsapp.utils
 
-import com.training.newsapp.api.ApiService
+import com.training.newsapp.data.api.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

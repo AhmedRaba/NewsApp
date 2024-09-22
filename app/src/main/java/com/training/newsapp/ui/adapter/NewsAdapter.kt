@@ -1,12 +1,12 @@
-package com.training.newsapp
+package com.training.newsapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.training.newsapp.R
+import com.training.newsapp.data.api.model.Article
 import com.training.newsapp.databinding.ItemNewsBinding
-import com.training.newsapp.model.articles.Article
-import java.util.Calendar
 
 class NewsAdapter(val articles: List<Article>) :
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
@@ -26,12 +26,12 @@ class NewsAdapter(val articles: List<Article>) :
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = articles[position]
+
         holder.binding.apply {
             tvTitleItem.text = article.title
             tvAuthorItem.text = article.source.name
-
-            Glide.with(holder.itemView).load(article.urlToImage).centerCrop().into(ivImageItem)
-
+            Glide.with(holder.itemView).load(article.urlToImage).centerCrop()
+                .placeholder(R.drawable.iv_place_holder).into(ivImageItem)
 
         }
     }

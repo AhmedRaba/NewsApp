@@ -1,4 +1,4 @@
-package com.training.newsapp
+package com.training.newsapp.ui.frags
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.training.newsapp.R
 import com.training.newsapp.databinding.FragmentCategoriesBinding
+import com.training.newsapp.ui.frags.CategoriesFragmentDirections
 
 class CategoriesFragment : Fragment() {
 
@@ -40,7 +42,7 @@ class CategoriesFragment : Fragment() {
         binding.btnHealth.setOnClickListener {
             navigateToNewsFrag("health")
         }
-        binding.btnScience.setOnClickListener {
+        binding.btnTechnology.setOnClickListener {
             navigateToNewsFrag("technology")
         }
         binding.btnPolitics.setOnClickListener {
@@ -77,7 +79,10 @@ class CategoriesFragment : Fragment() {
     }
 
     private fun navigateToNewsFrag(category: String) {
-        val action = CategoriesFragmentDirections.actionCategoriesFragmentToNewsFragment(category)
+        val action =
+            CategoriesFragmentDirections.actionCategoriesFragmentToNewsFragment(
+                category
+            )
         findNavController().navigate(action)
 
     }

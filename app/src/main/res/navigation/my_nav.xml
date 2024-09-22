@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/categoriesFragment"
-        android:name="com.training.newsapp.CategoriesFragment"
+        android:name="com.training.newsapp.ui.frags.CategoriesFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_categories" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.training.newsapp.NewsFragment"
+        android:name="com.training.newsapp.ui.frags.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" >
         <action
@@ -42,12 +42,12 @@
     </fragment>
     <fragment
         android:id="@+id/newsDetailsFragment"
-        android:name="com.training.newsapp.NewsDetailsFragment"
+        android:name="com.training.newsapp.ui.frags.NewsDetailsFragment"
         android:label="fragment_news_details"
         tools:layout="@layout/fragment_news_details" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.training.newsapp.SettingsFragment"
+        android:name="com.training.newsapp.ui.frags.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.training.newsapp.model.sources
+package com.training.newsapp.data.api.model
 
 
 import com.google.gson.annotations.SerializedName

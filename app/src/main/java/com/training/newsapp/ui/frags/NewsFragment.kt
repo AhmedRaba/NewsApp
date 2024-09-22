@@ -1,4 +1,4 @@
-package com.training.newsapp
+package com.training.newsapp.ui.frags
 
 import android.os.Bundle
 import android.util.Log
@@ -13,12 +13,15 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.training.newsapp.ui.adapter.NewsAdapter
+import com.training.newsapp.R
+import com.training.newsapp.data.api.model.ArticlesResponse
+import com.training.newsapp.data.api.model.Source
 import com.training.newsapp.databinding.FragmentNewsBinding
-import com.training.newsapp.model.articles.ArticlesResponse
-import com.training.newsapp.model.sources.Source
-import com.training.newsapp.viewmodel.NewsViewModel
-import org.intellij.lang.annotations.Language
+import com.training.newsapp.ui.viewmodel.NewsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding
@@ -44,6 +47,7 @@ class NewsFragment : Fragment() {
         setupRetryButton()
         setupDrawer()
         setupSearch()
+
 
         fetchSources()
 
@@ -74,7 +78,9 @@ class NewsFragment : Fragment() {
 
         viewModel.error.observe(viewLifecycleOwner) {
             showError(it)
+            Log.e("Error", "Error: $it")
             toggleRetryButton(true)
+            updateNewsList(ArticlesResponse(emptyList(), "", 0))
         }
     }
 
@@ -96,7 +102,7 @@ class NewsFragment : Fragment() {
             val selectedTab = binding.tabsNews.getTabAt(binding.tabsNews.selectedTabPosition)
             val source = selectedTab?.tag as? String
             if (source != null) {
-                fetchArticlesBySource(source, "")
+                fetchArticlesBySource(source)
             }
             fetchSources()
             toggleRetryButton(false)
@@ -145,6 +151,7 @@ class NewsFragment : Fragment() {
         }
 
         val firstTab = binding.tabsNews.getTabAt(0)
+        binding.tabsNews.selectTab(firstTab)
         fetchArticlesBySource(firstTab?.tag.toString())
 
 
@@ -176,9 +183,8 @@ class NewsFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchLayout.visibility = View.GONE
                 if (query != null) {
-
                     fetchArticlesBySource("", query)
-
+                    Log.e("onQueryTextSubmit", "onQueryTextSubmit: $query", )
                 }
                 return true
             }
@@ -202,7 +208,9 @@ class NewsFragment : Fragment() {
             when (menuItem.itemId) {
                 R.id.menu_categories -> {
                     findNavController().navigate(R.id.action_newsFragment_to_categoriesFragment)
-                } R.id.menu_settings -> {
+                }
+
+                R.id.menu_settings -> {
                     findNavController().navigate(R.id.action_newsFragment_to_settingsFragment)
                 }
             }
