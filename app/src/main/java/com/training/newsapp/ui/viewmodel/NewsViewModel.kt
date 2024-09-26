@@ -41,7 +41,14 @@ class NewsViewModel @Inject constructor(private val repository: NewsRepository) 
                 Log.e(TAG, "Sources response: ${response.body()}")
 
                 if (response.isSuccessful) {
-                    _sources.postValue(response.body())
+                    val sourcesResponse = response.body()
+                    if (sourcesResponse != null) {
+                        _sources.postValue(sourcesResponse)
+                        Log.e(TAG, "Fetched sources: ${sourcesResponse.sources}")
+                    } else {
+                        Log.e(TAG, "SourcesResponse body is null")
+                        _error.postValue("Sources response body is null")
+                    }
                 } else {
                     Log.e(TAG, "fetchSourcesVM: ${response.message()}")
                     _error.postValue(response.message())
@@ -53,6 +60,7 @@ class NewsViewModel @Inject constructor(private val repository: NewsRepository) 
             }
         }
     }
+
 
 
     fun fetchArticlesBySource(source: String, query: String) {

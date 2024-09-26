@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs")
-    id ("kotlin-parcelize")
+    id("kotlin-parcelize")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
@@ -65,8 +65,13 @@ dependencies {
 
 
     //retrofit
-    implementation (libs.retrofit)
-    implementation (libs.retrofit2.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit2.converter.gson)
+
+    //okHTTP
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+
 
 
     //roomDB
@@ -80,15 +85,11 @@ dependencies {
     kapt(libs.hilt.android.compiler)
 
 
-
     //splash
     implementation(libs.androidx.core.splashscreen)
 
     //glide
-    implementation (libs.glide)
-
-
-
+    implementation(libs.glide)
 
 
 }
