@@ -4,65 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
     app:startDestination="@id/categoriesFragment">
-
     <fragment
         android:id="@+id/categoriesFragment"
         android:name="com.training.newsapp.ui.frags.CategoriesFragment"
-        android:label="fragment_category"
+        android:label="fragment_categories"
         tools:layout="@layout/fragment_categories">
-
-        <!-- Navigates to NewsFragment, passing category -->
         <action
-            android:id="@+id/action_categoriesFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
-
-        <argument
-            android:name="category"
-            app:argType="string" />
-
+            android:id="@+id/action_categoryFragment_to_newsFragment"
+            app:destination="@id/newsFragment">
+            <argument
+                android:name="category"
+                app:argType="string" />
+        </action>
         <action
             android:id="@+id/action_categoriesFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.training.newsapp.ui.frags.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news">
-
         <action
             android:id="@+id/action_newsFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment"
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
-
-        <action
-            android:id="@+id/action_newsFragment_to_newsDetailsFragment"
-            app:destination="@id/newsDetailsFragment" />
-
-        <argument
-            android:name="category"
-            app:argType="string" />
         <action
             android:id="@+id/action_newsFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/newsDetailsFragment"
-        android:name="com.training.newsapp.ui.frags.NewsDetailsFragment"
-        android:label="fragment_news_details"
-        tools:layout="@layout/fragment_news_details">
-
         <action
-            android:id="@+id/action_newsDetailsFragment_to_newsFragment"
-            app:destination="@id/newsFragment" />
-    </fragment>
+            android:id="@+id/action_newsFragment_to_newsDetailsFragment"
+            app:destination="@id/newsDetailsFragment">
 
+            <argument
+                android:name="title"
+                app:argType="string" />
+            <argument
+                android:name="author"
+                app:argType="string" />
+            <argument
+                android:name="description"
+                app:argType="string" />
+            <argument
+                android:name="url"
+                app:argType="string" />
+            <argument
+                android:name="imageUrl"
+                app:argType="string" />
+            <argument
+                android:name="publishedAt"
+                app:argType="string" />
+
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.training.newsapp.ui.frags.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/newsDetailsFragment"
+        android:name="com.training.newsapp.NewsDetailsFragment"
+        android:label="fragment_news_details"
+        tools:layout="@layout/fragment_news_details">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <argument
+            android:name="author"
+            app:argType="string" />
+        <argument
+            android:name="description"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
+        <argument
+            android:name="publishedAt"
+            app:argType="string" />
+
+
+    </fragment>
 </navigation>

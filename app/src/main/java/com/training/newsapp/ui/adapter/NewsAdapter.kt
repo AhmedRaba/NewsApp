@@ -5,17 +5,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.size.Scale
-import coil.size.ViewSizeResolver
 import com.training.newsapp.R
 import com.training.newsapp.data.api.model.Article
 import com.training.newsapp.databinding.ItemNewsBinding
 
-class NewsAdapter(private val articles: List<Article>) :
+class NewsAdapter(
+    private val articles: List<Article>,
+    private val onArticleClick: (Article) -> Unit,
+) :
     RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
 
     inner class NewsViewHolder(val binding: ItemNewsBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+
+            val article = articles[adapterPosition]
+            if (article != null) {
+                onArticleClick(article)
+            }
+        }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)

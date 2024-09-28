@@ -9,12 +9,12 @@ import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.training.newsapp.R
 import com.training.newsapp.Resource
+import com.training.newsapp.data.api.model.Article
 import com.training.newsapp.data.api.model.ArticlesResponse
 import com.training.newsapp.data.api.model.Source
 import com.training.newsapp.databinding.FragmentNewsBinding
@@ -27,7 +27,6 @@ class NewsFragment : Fragment() {
 
     private lateinit var binding: FragmentNewsBinding
     private val viewModel: NewsViewModel by viewModels()
-    private val args: NewsFragmentArgs by navArgs()
 
 
     override fun onCreateView(
@@ -55,7 +54,9 @@ class NewsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvNews.adapter = NewsAdapter(emptyList())
+        binding.rvNews.adapter = NewsAdapter(emptyList()) {
+            navigateToNewsDetails(it)
+        }
     }
 
     private fun observeViewModel() {
@@ -134,14 +135,17 @@ class NewsFragment : Fragment() {
 
 
     private fun updateNewsList(response: ArticlesResponse) {
-        val adapter = NewsAdapter(response.articles)
+        val adapter = NewsAdapter(response.articles) {
+            navigateToNewsDetails(it)
+        }
         binding.rvNews.adapter = adapter
     }
 
 
     private fun fetchSources() {
-        viewModel.fetchSources(args.category)
-        Log.e("fetchSources", "fetchSources: ${args.category}")
+        val category = arguments?.getString("category")
+        viewModel.fetchSources(category.toString())
+        Log.e("fetchSources", "fetchSources: $category")
     }
 
     private fun fetchArticlesBySource(source: String, query: String = "") {
@@ -238,5 +242,19 @@ class NewsFragment : Fragment() {
     private fun showError(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
+
+
+    private fun navigateToNewsDetails(article: Article) {
+        val action = NewsFragmentDirections.actionNewsFragmentToNewsDetailsFragment(
+            article.title,
+            article.source.name,
+            article.description,
+            article.url,
+            article.urlToImage,
+            article.publishedAt
+        )
+        findNavController().navigate(action)
+    }
+
 
 }

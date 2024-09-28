@@ -10,4 +10,5 @@
     <string name="health">الصحة</string>
     <string name="environment">البيئة</string>
     <string name="language">اللغة</string>
+    <string name="view_full_article">أضغط لقراءة الخبر بالكامل</string>
 </resources>

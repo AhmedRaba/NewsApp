@@ -11,4 +11,5 @@
     <string name="health">Health</string>
     <string name="environment">Environment</string>
     <string name="language">Language</string>
+    <string name="view_full_article">View Full Article</string>
 </resources>

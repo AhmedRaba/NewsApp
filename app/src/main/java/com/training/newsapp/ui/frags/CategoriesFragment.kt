@@ -82,7 +82,7 @@ class CategoriesFragment : Fragment() {
     private fun navigateToNewsFrag(category: String) {
 
         val action =
-            CategoriesFragmentDirections.actionCategoriesFragmentToNewsFragment(
+            CategoriesFragmentDirections.actionCategoryFragmentToNewsFragment(
                 category
             )
         findNavController().navigate(action)
