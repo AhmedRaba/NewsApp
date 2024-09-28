@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.training.newsapp.R
+import com.training.newsapp.Resource
 import com.training.newsapp.data.api.model.ArticlesResponse
 import com.training.newsapp.data.api.model.Source
 import com.training.newsapp.databinding.FragmentNewsBinding
@@ -58,30 +59,42 @@ class NewsFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            showLoading(isLoading)
-        }
 
-        viewModel.articles.observe(viewLifecycleOwner) { response ->
-            if (response == null || response.articles.isEmpty()) {
-                toggleRetryButton(true)
-                updateNewsList(response)
-            } else {
-                updateNewsList(response)
-                toggleRetryButton(false)
+
+        viewModel.articles.observe(viewLifecycleOwner) { articleRrsponse ->
+            when (articleRrsponse) {
+                is Resource.Loading -> showLoading(true)
+                is Resource.Success -> {
+                    showLoading(false)
+                    updateNewsList(articleRrsponse.data!!)
+                    toggleRetryButton(false)
+                }
+
+                is Resource.Error -> {
+                    showLoading(false)
+                    showError(articleRrsponse.message!!)
+                    toggleRetryButton(true)
+                }
             }
         }
 
-        viewModel.sources.observe(viewLifecycleOwner) { response ->
-            showTabs(response.sources)
+        viewModel.sources.observe(viewLifecycleOwner) { sourcesResponse ->
+            when (sourcesResponse) {
+                is Resource.Loading -> showLoading(true)
+                is Resource.Success -> {
+                    showLoading(false)
+                    showTabs(sourcesResponse.data!!.sources)
+                    toggleRetryButton(false)
+                }
+
+                is Resource.Error -> {
+                    showLoading(false)
+                    showError(sourcesResponse.message!!)
+                    toggleRetryButton(false)
+                }
+            }
         }
 
-        viewModel.error.observe(viewLifecycleOwner) {
-            showError(it)
-            Log.e("Error", "Error: $it")
-            toggleRetryButton(true)
-            updateNewsList(ArticlesResponse(emptyList(), "", 0))
-        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -128,6 +141,7 @@ class NewsFragment : Fragment() {
 
     private fun fetchSources() {
         viewModel.fetchSources(args.category)
+        Log.e("fetchSources", "fetchSources: ${args.category}")
     }
 
     private fun fetchArticlesBySource(source: String, query: String = "") {

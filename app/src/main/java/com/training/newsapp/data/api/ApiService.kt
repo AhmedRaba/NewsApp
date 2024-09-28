@@ -21,7 +21,7 @@ interface ApiService {
     suspend fun getArticlesBySource(
         @Query("apikey") apiKey: String=RetrofitClient.API_KEY,
         @Query("sources") sources: String,
-        @Query("q") query: String=""
+        @Query("q") query: String
     ): Response<ArticlesResponse>
 
 

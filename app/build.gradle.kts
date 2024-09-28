@@ -84,8 +84,9 @@ dependencies {
     //splash
     implementation(libs.androidx.core.splashscreen)
 
-    //glide
-    implementation (libs.glide)
+
+    //Coil
+    implementation(libs.coil)
 
 
 
