@@ -1,4 +1,4 @@
-package com.training.newsapp
+package com.training.newsapp.ui.frags
 
 import android.content.Intent
 import android.net.Uri

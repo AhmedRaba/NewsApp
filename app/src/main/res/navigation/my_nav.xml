@@ -65,7 +65,7 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/newsDetailsFragment"
-        android:name="com.training.newsapp.NewsDetailsFragment"
+        android:name="com.training.newsapp.ui.frags.NewsDetailsFragment"
         android:label="fragment_news_details"
         tools:layout="@layout/fragment_news_details">
         <argument

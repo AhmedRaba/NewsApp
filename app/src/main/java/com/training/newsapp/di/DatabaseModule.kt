@@ -2,8 +2,8 @@ package com.training.newsapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.training.newsapp.data.database.MyDataBase
 import com.training.newsapp.data.dao.SourcesDao
+import com.training.newsapp.data.database.MyDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,13 +23,9 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context, MyDataBase::class.java,
             "my_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
     }
-
-//    @Provides
-//    fun providesArticlesDao(dataBase: MyDataBase): ArticlesDao {
-//        return dataBase.articleDao()
-//    }
 
     @Provides
     fun providesSourcesDao(dataBase: MyDataBase): SourcesDao {

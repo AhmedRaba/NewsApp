@@ -24,7 +24,6 @@ class NewsViewModel @Inject constructor(private val repository: NewsRepository) 
     val sources: LiveData<Resource<SourcesResponse>> get() = _sources
 
 
-
     fun fetchSources(category: String) {
         _sources.postValue(Resource.Loading())
         viewModelScope.launch(Dispatchers.IO) {
@@ -41,4 +40,5 @@ class NewsViewModel @Inject constructor(private val repository: NewsRepository) 
             _articles.postValue(result)
         }
     }
+
 }

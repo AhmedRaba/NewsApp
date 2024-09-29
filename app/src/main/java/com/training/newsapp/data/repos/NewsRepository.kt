@@ -15,4 +15,6 @@ interface NewsRepository {
 
     suspend fun getArticlesBySource(source: String,query: String): Resource<ArticlesResponse>
 
+    
+
 }

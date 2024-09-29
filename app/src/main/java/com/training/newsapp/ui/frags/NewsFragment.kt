@@ -62,18 +62,18 @@ class NewsFragment : Fragment() {
     private fun observeViewModel() {
 
 
-        viewModel.articles.observe(viewLifecycleOwner) { articleRrsponse ->
-            when (articleRrsponse) {
+        viewModel.articles.observe(viewLifecycleOwner) { articleResponse ->
+            when (articleResponse) {
                 is Resource.Loading -> showLoading(true)
                 is Resource.Success -> {
                     showLoading(false)
-                    updateNewsList(articleRrsponse.data!!)
+                    updateNewsList(articleResponse.data!!)
                     toggleRetryButton(false)
                 }
 
                 is Resource.Error -> {
                     showLoading(false)
-                    showError(articleRrsponse.message!!)
+                    showError(articleResponse.message!!)
                     toggleRetryButton(true)
                 }
             }
@@ -91,7 +91,7 @@ class NewsFragment : Fragment() {
                 is Resource.Error -> {
                     showLoading(false)
                     showError(sourcesResponse.message!!)
-                    toggleRetryButton(false)
+                    toggleRetryButton(true)
                 }
             }
         }
@@ -149,6 +149,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun fetchArticlesBySource(source: String, query: String = "") {
+        Log.e("SOURCE", "SOURCE: $source")
         viewModel.fetchArticlesBySource(source = source, query = query)
     }
 
@@ -250,7 +251,7 @@ class NewsFragment : Fragment() {
             article.source.name,
             article.description,
             article.url,
-            article.urlToImage,
+            article.urlToImage ?: "",
             article.publishedAt
         )
         findNavController().navigate(action)
