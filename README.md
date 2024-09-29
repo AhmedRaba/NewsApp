@@ -10,7 +10,7 @@ Welcome to **NewsApp**! This Android application allows you to stay updated with
 - **Retrofit Integration**: Fetch news data from multiple sources seamlessly.
 - **Search Functionality**: Easily search for news articles by category or source.
 - **Language Support**: Change the app's language to suit your preferences. 🌍
-- 
+  
 ## Tech Stack ⚙️
 
 - **Kotlin**: For building the Android application.
