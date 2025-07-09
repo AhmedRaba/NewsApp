@@ -1,10 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     alias(libs.plugins.hilt)
 }
-
+val properties = Properties().apply {
+    load(rootProject.file("local.properties").inputStream())
+}
 android {
     namespace = "com.silverkey.newsapp"
     compileSdk = 34
@@ -17,14 +21,19 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "NEWS_API_KEY",
+            "\"${properties["NEWS_API_KEY"]}\""
+        )
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
