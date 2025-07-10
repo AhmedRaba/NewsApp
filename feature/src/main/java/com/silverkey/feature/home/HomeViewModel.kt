@@ -1,4 +1,4 @@
-package com.silverkey.newsapp.ui.home
+package com.silverkey.feature.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

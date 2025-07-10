@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.silverkey.core"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -52,7 +51,7 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
+//    kapt(libs.androidx.room.compiler)
 
     // Hilt
     implementation(libs.hilt.android)
