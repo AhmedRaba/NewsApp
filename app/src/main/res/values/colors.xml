@@ -7,7 +7,7 @@
     <color name="color_primary">#0267FF</color>
 
     <!-- Backgrounds -->
-    <color name="color_background">#FFFFFF</color> <!-- General background -->
+    <color name="color_background">#E9ECF1</color> <!-- General background -->
     <color name="color_surface">#FFFFFF</color>     <!-- Cards, containers -->
 
     <!-- Splash screen background and general default text/icon color -->

@@ -2,7 +2,7 @@ package com.silverkey.data.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.silverkey.core.utils.Constants.BASE_URL
+import com.silverkey.domain.utils.Constants.BASE_URL
 import com.silverkey.data.remote.api.NewsApiService
 import dagger.Module
 import dagger.Provides

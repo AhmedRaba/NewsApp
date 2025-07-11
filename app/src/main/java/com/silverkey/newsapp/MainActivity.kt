@@ -3,7 +3,6 @@ package com.silverkey.newsapp
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.view.WindowInsets
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_saved, R.id.navigation_notifications
             )
         )
         navView.setupWithNavController(navController)
@@ -40,9 +39,8 @@ class MainActivity : AppCompatActivity() {
             val insetsController = WindowCompat.getInsetsController(window, window.decorView)
             val splashColor=ContextCompat.getColor(this, R.color.color_splash_background)
             when (destination.id) {
-                com.silverkey.feature.R.id.splashFragment -> {
+                R.id.splashFragment -> {
                     navView.visibility = View.GONE
-                    binding.toolbar.visibility = View.GONE
 
                     insetsController.isAppearanceLightStatusBars = false
 
@@ -65,7 +63,6 @@ class MainActivity : AppCompatActivity() {
 
                 else -> {
                     navView.visibility = View.VISIBLE
-                    binding.toolbar.visibility = View.VISIBLE
 
                     insetsController.isAppearanceLightStatusBars = true
 

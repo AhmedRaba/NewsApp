@@ -1,6 +1,6 @@
 package com.silverkey.data.remote.api
 
-import com.silverkey.core.utils.Constants.NEWS_SOURCE
+import com.silverkey.domain.utils.Constants.NEWS_SOURCE
 import com.silverkey.data.BuildConfig
 import com.silverkey.data.remote.dto.NewsResponseDto
 import retrofit2.http.GET
