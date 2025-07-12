@@ -23,5 +23,6 @@
     <color name="color_toolbar">#FFFFFF</color>
     <color name="color_navigation_bar">#FFFFFF</color>
 
+    <color name="color_card_border">#E9ECF1</color>
 
 </resources>

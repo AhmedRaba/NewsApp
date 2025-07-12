@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.silverkey.domain.model.Article
 import com.silverkey.domain.utils.Result
 import com.silverkey.newsapp.databinding.FragmentHomeBinding
@@ -16,54 +18,55 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: HomeViewModel by viewModels()
-//    private val newsAdapter = NewsAdapter()
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        setupRecyclerView()
         observeNews()
-        return root
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun setupRecyclerView() {
+
+        newsAdapter = NewsAdapter(onClick = { article ->
+            Toast.makeText(requireContext(), "Hello", Toast.LENGTH_SHORT).show()
+        })
+        binding.recylclerView.apply {
+            adapter = newsAdapter
+        }
     }
 
     private fun observeNews() {
         viewModel.newsState.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.textHome.text = "Loading..."
+                    // TODO: Show loading shimmer or progress bar
                 }
 
                 is Result.Success -> {
-                    val firstArticle = result.data.firstOrNull()
-                    if (firstArticle != null) {
-                        showArticle(firstArticle)
-                    } else {
-                        binding.textHome.text = "No articles available."
-                    }
+                    newsAdapter.submitList(result.data)
                 }
 
                 is Result.Error -> {
-                    binding.textHome.text = "Error: ${result.exception.message}"
+                    // TODO: Show error UI
                 }
 
                 is Result.Empty -> {
-                    binding.textHome.text = "No articles available."
+                    // TODO: Show empty state UI
                 }
             }
         }
     }
 
-    private fun showArticle(article: Article) {
-        binding.textHome.text = article.title
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
