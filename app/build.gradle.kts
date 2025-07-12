@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     kotlin("kapt")
     alias(libs.plugins.hilt)
+    alias(libs.plugins.navigation.safe.args)
 }
 val properties = Properties().apply {
     load(rootProject.file("local.properties").inputStream())

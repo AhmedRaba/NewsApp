@@ -16,7 +16,8 @@ import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 
 class NewsAdapter(
-    private val onClick: (Article) -> Unit,
+    private val onReadMoreClick: (Article) -> Unit,
+    private val onFavoriteClick: (Article) -> Unit,
 ) : ListAdapter<Article, NewsAdapter.NewsViewHolder>(DiffCallback) {
 
     inner class NewsViewHolder(private val binding: ItemNewsArticleBinding) :
@@ -33,8 +34,8 @@ class NewsAdapter(
                 error(R.drawable.iv_placeholder)
             }
 
-            btnReadMore.setOnClickListener { onClick(article) }
-            btnFavorite.setOnClickListener { onClick(article) }
+            btnReadMore.setOnClickListener { onReadMoreClick(article) }
+            btnFavorite.setOnClickListener { onFavoriteClick(article) }
         }
     }
 

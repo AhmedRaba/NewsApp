@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.silverkey.domain.model.Article
+import androidx.navigation.fragment.findNavController
 import com.silverkey.domain.utils.Result
+import com.silverkey.newsapp.R
 import com.silverkey.newsapp.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,9 +35,15 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
 
-        newsAdapter = NewsAdapter(onClick = { article ->
-            Toast.makeText(requireContext(), "Hello", Toast.LENGTH_SHORT).show()
-        })
+        newsAdapter = NewsAdapter(
+            onReadMoreClick = { article ->
+                val action = HomeFragmentDirections.actionNavigationHomeToDetailsFragment(article)
+                findNavController().navigate(action)
+            },
+            onFavoriteClick = { article ->
+
+            }
+        )
         binding.recylclerView.apply {
             adapter = newsAdapter
         }

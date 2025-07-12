@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.silverkey.newsapp.R
 import com.silverkey.newsapp.databinding.FragmentSplashBinding
 
@@ -30,7 +31,15 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_navigation_home)
+            findNavController().navigate(
+                R.id.action_splashFragment_to_navigation_home,
+                null,
+                navOptions {
+                    popUpTo(R.id.splashFragment) {
+                        inclusive = true
+                    }
+                }
+            )
         }, 2000)
     }
 
