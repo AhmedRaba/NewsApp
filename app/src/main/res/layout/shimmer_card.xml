@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:layout_marginBottom="12dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp">
+
+            <View
+                android:id="@+id/shimmer_thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="180dp"
+                android:background="@drawable/shimmer_placeholder_bg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/shimmer_title"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/shimmer_placeholder_bg"
+                app:layout_constraintTop_toBottomOf="@id/shimmer_thumbnail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/shimmer_date"
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/shimmer_placeholder_bg"
+                app:layout_constraintTop_toBottomOf="@id/shimmer_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/shimmer_description"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/shimmer_placeholder_bg"
+                app:layout_constraintTop_toBottomOf="@id/shimmer_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:id="@+id/shimmer_button"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shimmer_placeholder_bg"
+                app:layout_constraintTop_toBottomOf="@id/shimmer_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/shimmer_favorite" />
+
+            <View
+                android:id="@+id/shimmer_favorite"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/shimmer_placeholder_bg"
+                app:layout_constraintTop_toTopOf="@id/shimmer_button"
+                app:layout_constraintBottom_toBottomOf="@id/shimmer_button"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</com.facebook.shimmer.ShimmerFrameLayout>

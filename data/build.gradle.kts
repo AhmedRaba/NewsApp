@@ -66,6 +66,11 @@ dependencies {
     // Gson
     implementation(libs.gson)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+
+
     //hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

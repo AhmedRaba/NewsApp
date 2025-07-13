@@ -11,4 +11,6 @@ data class Article(
     val url:String,
     val imageUrl:String,
     val publishedAt:String,
+    val localImagePath: String? = null
+
 ):Parcelable

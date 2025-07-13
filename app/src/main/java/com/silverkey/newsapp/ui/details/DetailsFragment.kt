@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -41,7 +39,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       setupStatusBar()
+        setupStatusBar()
 
         bindData()
 
@@ -70,7 +68,7 @@ class DetailsFragment : Fragment() {
         tvDescription.text = args.article.description
     }
 
-    fun formatDaysAgo(publishedAt: String?): String {
+    private fun formatDaysAgo(publishedAt: String?): String {
         if (publishedAt.isNullOrEmpty()) return ""
 
         return try {

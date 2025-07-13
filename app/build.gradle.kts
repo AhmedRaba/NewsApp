@@ -81,5 +81,11 @@ dependencies {
     // Coil
     implementation(libs.coil)
 
+    // Shimmer
+    implementation(libs.shimmer)
+
+    // SwipeRefresh
+    implementation(libs.androidx.swiperefreshlayout)
+
 
 }

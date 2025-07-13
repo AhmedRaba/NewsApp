@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.silverkey.domain.utils.Result
-import com.silverkey.newsapp.R
 import com.silverkey.newsapp.databinding.FragmentHomeBinding
+import com.silverkey.newsapp.ui.NewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,6 +31,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         setupRecyclerView()
         observeNews()
+        observeSavedStatuses()
+
         return binding.root
     }
 
@@ -41,10 +44,10 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(action)
             },
             onFavoriteClick = { article ->
-
+                viewModel.toggleArticleSaved(article)
             }
         )
-        binding.recylclerView.apply {
+        binding.recyclerView.apply {
             adapter = newsAdapter
         }
     }
@@ -53,24 +56,41 @@ class HomeFragment : Fragment() {
         viewModel.newsState.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    // TODO: Show loading shimmer or progress bar
+                    binding.shimmerLayout.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.GONE
                 }
 
                 is Result.Success -> {
                     newsAdapter.submitList(result.data)
+                    binding.shimmerLayout.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+
+                    result.data.forEach { article ->
+                        viewModel.checkIfArticleSaved(article.url)
+                    }
                 }
 
+
                 is Result.Error -> {
-                    // TODO: Show error UI
+                    binding.shimmerLayout.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    Toast.makeText(requireContext(), "Error loading news", Toast.LENGTH_SHORT).show()
                 }
 
                 is Result.Empty -> {
-                    // TODO: Show empty state UI
+                    binding.shimmerLayout.visibility = View.GONE
+                    binding.recyclerView.visibility = View.VISIBLE
                 }
             }
         }
     }
+    private fun observeSavedStatuses() {
+        viewModel.savedStatuses.observe(viewLifecycleOwner) { savedMap ->
 
+            val savedUrls = savedMap.filter { it.value }.keys
+            newsAdapter.updateSavedArticles(savedUrls)
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
