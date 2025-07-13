@@ -1,4 +1,4 @@
-package com.silverkey.newsapp.ui.home
+package com.silverkey.newsapp.ui.details
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.silverkey.domain.model.Article
 import com.silverkey.domain.usecase.DeleteArticleUseCase
-import com.silverkey.domain.usecase.FetchNewsUseCase
 import com.silverkey.domain.usecase.IsArticleSavedUseCase
 import com.silverkey.domain.usecase.SaveArticleUseCase
 import com.silverkey.domain.utils.Result
@@ -16,60 +15,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val fetchNewsUseCase: FetchNewsUseCase,
+class DetailsViewModel @Inject constructor(
     private val saveArticleUseCase: SaveArticleUseCase,
     private val deleteArticleUseCase: DeleteArticleUseCase,
     private val isArticleSavedUseCase: IsArticleSavedUseCase,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _newsState = MutableLiveData<Result<List<Article>>>()
     val newsState: LiveData<Result<List<Article>>> get() = _newsState
 
     private val _savedStatuses = MutableLiveData<Map<String, Boolean>>()
     val savedStatuses: LiveData<Map<String, Boolean>> get() = _savedStatuses
-
-    init {
-        fetchNews()
-    }
-
-    fun fetchNews() {
-        viewModelScope.launch {
-            try {
-                _newsState.value = Result.Loading
-
-                val result = fetchNewsUseCase()
-
-                when (result) {
-                    is Result.Success -> {
-                        val articles = result.data
-                        if (articles.isEmpty()) {
-                            _newsState.value = Result.Empty
-                        } else {
-                            _newsState.value = Result.Success(articles)
-                            Log.d("HomeViewModel", "Fetched ${articles.size} articles")
-                        }
-                    }
-
-                    is Result.Error -> {
-                        _newsState.value = result
-                        Log.e("HomeViewModel", "Failed to fetch news: ${result.exception.message}")
-                    }
-
-                    is Result.Empty -> {
-                        _newsState.value = Result.Empty
-                        Log.d("HomeViewModel", "No news articles found")
-                    }
-
-                    is Result.Loading -> {} // Already set
-                }
-
-            } catch (e: Exception) {
-                _newsState.value = Result.Error(e)
-                Log.e("HomeViewModel", "Unexpected error: ${e.message}")
-            }
-        }
-    }
 
 
     fun toggleArticleSaved(article: Article) {
@@ -83,15 +39,15 @@ class HomeViewModel @Inject constructor(
             try {
                 if (isCurrentlySaved) {
                     deleteArticleUseCase(article)
-                    Log.d("HomeViewModel", "Deleted: ${article.title}")
+                    Log.d("DetailsViewModel", "Deleted: ${article.title}")
                 } else {
                     saveArticleUseCase(article)
-                    Log.d("HomeViewModel", "Saved: ${article.title}")
+                    Log.d("DetailsViewModel", "Saved: ${article.title}")
                 }
             } catch (e: Exception) {
                 updatedMap[article.url] = isCurrentlySaved
                 _savedStatuses.postValue(updatedMap)
-                Log.e("HomeViewModel", "Toggle failed: ${e.message}")
+                Log.e("DetailsViewModel", "Toggle failed: ${e.message}")
             }
         }
     }
@@ -104,5 +60,6 @@ class HomeViewModel @Inject constructor(
             _savedStatuses.value = updatedMap
         }
     }
+
 
 }

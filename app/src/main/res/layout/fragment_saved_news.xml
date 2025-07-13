@@ -53,5 +53,30 @@
         android:layout_marginHorizontal="24dp"
         tools:listitem="@layout/item_news_article" />
 
+    <LinearLayout
+        android:id="@+id/empty_state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="32dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/iv_empty"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/nothing_saved_yet"
+            style="@style/LargeTextStyle"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

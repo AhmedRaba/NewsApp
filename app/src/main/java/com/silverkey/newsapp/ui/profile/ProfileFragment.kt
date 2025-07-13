@@ -9,7 +9,9 @@ import androidx.navigation.fragment.findNavController
 import com.silverkey.newsapp.R
 import com.silverkey.newsapp.databinding.FragmentHomeBinding
 import com.silverkey.newsapp.databinding.FragmentProfileBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null

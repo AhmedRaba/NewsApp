@@ -8,24 +8,28 @@ import android.view.ViewGroup
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.silverkey.newsapp.R
 import com.silverkey.newsapp.databinding.FragmentDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 
-
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
 
     private val args: DetailsFragmentArgs by navArgs()
+
+    private val viewModel: DetailsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +44,18 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupStatusBar()
-
         bindData()
 
         binding.icBack.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.icSave.setOnClickListener {
+            viewModel.toggleArticleSaved(args.article)
+        }
+
+        viewModel.checkIfArticleSaved(args.article.url)
+        observeSavedStatus()
     }
 
     private fun setupStatusBar() {
@@ -67,6 +77,19 @@ class DetailsFragment : Fragment() {
         tvAuthor.text = args.article.author
         tvDescription.text = args.article.description
     }
+
+    private fun observeSavedStatus() {
+        viewModel.savedStatuses.observe(viewLifecycleOwner) { savedMap ->
+            val isSaved = savedMap[args.article.url] == true
+            updateSaveIcon(isSaved)
+        }
+    }
+
+    private fun updateSaveIcon(isSaved: Boolean) {
+        val iconRes = if (isSaved) R.drawable.ic_save_white_filled else R.drawable.ic_saved_white
+        binding.icSave.setImageResource(iconRes)
+    }
+
 
     private fun formatDaysAgo(publishedAt: String?): String {
         if (publishedAt.isNullOrEmpty()) return ""

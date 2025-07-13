@@ -84,14 +84,24 @@ class SavedNewsFragment : Fragment() {
         viewModel.savedArticlesState.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.emptyStateLayout.visibility = View.GONE
                 }
 
                 is Result.Success -> {
+                    val articles = result.data
+                    newsAdapter.submitList(articles)
 
-                    newsAdapter.submitList(result.data)
-
-                    val allUrls = result.data.map { it.url }.toSet()
+                    val allUrls = articles.map { it.url }.toSet()
                     newsAdapter.updateSavedArticles(allUrls)
+
+                    binding.recyclerView.visibility = if (articles.isNotEmpty()) View.VISIBLE else View.GONE
+                    binding.emptyStateLayout.visibility = if (articles.isEmpty()) View.VISIBLE else View.GONE
+                }
+
+                is Result.Empty -> {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.emptyStateLayout.visibility = View.VISIBLE
                 }
 
                 is Result.Error -> {
@@ -100,15 +110,18 @@ class SavedNewsFragment : Fragment() {
                         "Failed to load saved articles",
                         Toast.LENGTH_SHORT
                     ).show()
-                }
 
-                is Result.Empty -> {
-
+                    binding.recyclerView.visibility = View.GONE
+                    binding.emptyStateLayout.visibility = View.VISIBLE
                 }
             }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getSavedArticles()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,6 +35,10 @@ class HomeFragment : Fragment() {
             viewModel.fetchNews()
         }
 
+        binding.btnRetry.setOnClickListener {
+            viewModel.fetchNews()
+        }
+
         return binding.root
     }
 
@@ -60,30 +62,40 @@ class HomeFragment : Fragment() {
         viewModel.newsState.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
+                    binding.errorLayout.visibility = View.GONE
+                    binding.tvError.text = ""
                     binding.shimmerLayout.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
 
                 is Result.Success -> {
                     newsAdapter.submitList(result.data)
                     binding.shimmerLayout.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
+                    binding.errorLayout.visibility = View.GONE
+                    binding.tvError.text = ""
+                    binding.swipeRefreshLayout.isRefreshing = false
 
                     result.data.forEach { article ->
                         viewModel.checkIfArticleSaved(article.url)
                     }
                 }
 
-
                 is Result.Error -> {
                     binding.shimmerLayout.visibility = View.GONE
-                    binding.recyclerView.visibility = View.VISIBLE
-                    Toast.makeText(requireContext(), "Error loading news", Toast.LENGTH_SHORT).show()
+                    binding.recyclerView.visibility = View.GONE
+                    binding.errorLayout.visibility = View.VISIBLE
+                    binding.swipeRefreshLayout.isRefreshing = false
+                    binding.tvError.text = result.exception.message ?: "An error occurred"
                 }
 
                 is Result.Empty -> {
                     binding.shimmerLayout.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
+                    binding.errorLayout.visibility = View.GONE
+                    binding.tvError.text = ""
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
             }
         }

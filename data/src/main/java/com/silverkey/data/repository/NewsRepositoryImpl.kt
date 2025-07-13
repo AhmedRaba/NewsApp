@@ -31,8 +31,14 @@ class NewsRepositoryImpl @Inject constructor(
             } else {
                 Result.Success(articles)
             }
+        } catch (e: retrofit2.HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val message = parseErrorMessage(errorBody)
+            Result.Error(Exception(message))
+        } catch (e: java.io.IOException) {
+            Result.Error(Exception("Check your internet connection."))
         } catch (e: Exception) {
-            Result.Error(e)
+            Result.Error(Exception("Unexpected error: ${e.localizedMessage ?: e.toString()}"))
         }
     }
 
@@ -47,7 +53,7 @@ class NewsRepositoryImpl @Inject constructor(
 
     override suspend fun saveArticle(article: Article) {
         try {
-            val localImagePath = article.imageUrl?.let {
+            val localImagePath = article.imageUrl.let {
                 FileUtils.downloadImageAndSaveToInternalStorage(context, it)
             }
 
@@ -83,4 +89,16 @@ class NewsRepositoryImpl @Inject constructor(
             false
         }
     }
+
+
+    private fun parseErrorMessage(errorBody: String?): String {
+        return try {
+            val jsonObject = com.google.gson.JsonParser.parseString(errorBody).asJsonObject
+            jsonObject["message"]?.asString ?: "Something went wrong"
+        } catch (e: Exception) {
+            "Something went wrong"
+        }
+    }
+
+
 }

@@ -22,10 +22,10 @@ class SavedNewsViewModel @Inject constructor(
     val savedArticlesState: LiveData<Result<List<Article>>> get() = _savedArticlesState
 
     init {
-        fetchSavedArticles()
+        getSavedArticles()
     }
 
-   private fun fetchSavedArticles() {
+   fun getSavedArticles() {
         viewModelScope.launch {
             val result = getSavedArticlesUseCase()
             _savedArticlesState.value = result
@@ -35,7 +35,7 @@ class SavedNewsViewModel @Inject constructor(
     fun deleteArticle(article: Article) {
         viewModelScope.launch {
             deleteArticleUseCase(article)
-            fetchSavedArticles()
+            getSavedArticles()
         }
     }
 }
