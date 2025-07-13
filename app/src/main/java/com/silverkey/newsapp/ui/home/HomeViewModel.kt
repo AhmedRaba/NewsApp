@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
         fetchNews()
     }
 
-    private fun fetchNews() {
+    fun fetchNews() {
         viewModelScope.launch {
             _newsState.value = Result.Loading
             _newsState.value = fetchNewsUseCase()

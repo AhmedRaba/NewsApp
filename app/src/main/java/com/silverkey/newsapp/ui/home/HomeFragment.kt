@@ -33,6 +33,10 @@ class HomeFragment : Fragment() {
         observeNews()
         observeSavedStatuses()
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.fetchNews()
+        }
+
         return binding.root
     }
 
