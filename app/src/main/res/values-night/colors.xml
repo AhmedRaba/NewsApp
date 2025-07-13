@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Primary brand color (used for selected icons, highlights) -->
+    <color name="color_primary">#0267FF</color>
+
+    <!-- Backgrounds -->
+    <color name="color_background">#E9ECF1</color> <!-- General background -->
+    <color name="color_surface">#FFFFFF</color>     <!-- Cards, containers -->
+
+    <!-- Splash screen background and general default text/icon color -->
+    <color name="color_splash_background">#171924</color>
+    <color name="color_text_primary">#171924</color>
+    <color name="color_icon_default">#171924</color>
+
+    <!-- Text/icons over images (e.g. in detail fragment header) -->
+    <color name="color_on_image">#FFFFFF</color>
+
+    <!-- Status bar and toolbar -->
+    <color name="color_status_bar">#FFFFFF</color>
+    <color name="color_toolbar">#FFFFFF</color>
+    <color name="color_navigation_bar">#FFFFFF</color>
+
+    <color name="color_card_border">#E9ECF1</color>
+
+</resources>
