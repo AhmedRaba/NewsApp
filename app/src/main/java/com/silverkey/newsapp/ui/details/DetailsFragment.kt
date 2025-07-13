@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.silverkey.newsapp.R
@@ -32,19 +35,25 @@ class DetailsFragment : Fragment() {
     ): View {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
-        setupStatusBar()
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+       setupStatusBar()
+
         bindData()
 
-
-        return binding.root
+        binding.icBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupStatusBar() {
         val window = requireActivity().window
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.statusBarColor = Color.TRANSPARENT
-
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
     }
 
@@ -90,12 +99,15 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        requireActivity().window?.let { window ->
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        activity?.window?.let { window ->
-            WindowCompat.setDecorFitsSystemWindows(window, true)
-        }
         _binding = null
     }
 

@@ -5,4 +5,10 @@
     <string name="read_more">Read More</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="profile">Profile</string>
+    <string name="ahmedrapa91_gmail_com">ahmedrapa91@gmail.com</string>
+    <string name="notifications">Notifications</string>
+    <string name="language">Language</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
 </resources>
