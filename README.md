@@ -12,7 +12,7 @@ An Android News application developed using **Kotlin**, **MVVM**, **XML layouts*
   - Favorite button toggle
   - Pull-to-refresh  
 - Shimmer loading effect  
-- Details Screen: Full article with image, author, content, and save/share actions  
+- Details Screen: Full article with image, author, content, and save actions  
 - Favorite Screen: Only saved articles  
 - Profile Screen: Static user info and logout button
 
