@@ -72,14 +72,6 @@ An Android News application developed using **Kotlin**, **MVVM**, **XML layouts*
 
 ---
 
-## 🚀 Getting Started
-
-1. Clone the repo  
-2. Add your API key in the appropriate place  
-3. Build & run using Android Studio
-
----
-
 ## 👤 Author
 
 **Ahmed Raba**  
